@@ -1,0 +1,18 @@
+cAdvisor:
+  image: google/cadvisor
+  container_name: cAdvisor
+  expose:
+    - "8080"
+  volumes:
+    - /:/rootfs:ro
+    - /var/run:/var/run:rw
+    - /sys:/sys:ro
+    - /var/lib/docker/:/var/lib/docker:ro
+cAdviser_nginx:
+  image: siweiwang/nginx
+  container_name: cAdviser_nginx
+  ports:
+    - "443:443"
+  links:
+    - cAdvisor
+  env_file: ./nginx.env
